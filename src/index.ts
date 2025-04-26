@@ -3,6 +3,7 @@ import { typeDefs, resolvers } from './schema';
 import { config } from './config/env';
 import {
   ApolloServerPluginLandingPageDisabled,
+  ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageLocalDefault,
 } from 'apollo-server-core';
 
@@ -12,7 +13,9 @@ async function startServer() {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    introspection: true,
     plugins: [
+      ApolloServerPluginLandingPageGraphQLPlayground,
       config.isDev
         ? ApolloServerPluginLandingPageLocalDefault()
         : ApolloServerPluginLandingPageDisabled(),
@@ -29,7 +32,6 @@ async function startServer() {
   const { url } = await server.listen({ port: config.port });
 
   logger.info(`🚀 Server ready at  ${url}`);
-  console.log(`🚀 Server ready at`);
 }
 
 startServer();
