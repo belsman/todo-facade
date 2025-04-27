@@ -14,6 +14,7 @@ async function startServer() {
     typeDefs,
     resolvers,
     introspection: true,
+    
     plugins: [
       ApolloServerPluginLandingPageGraphQLPlayground,
       config.isDev
@@ -22,16 +23,16 @@ async function startServer() {
     ],
     context: ({ req }) => {
       // attach auth token, etc.
-      logger.info({ headers: req.headers }, 'Incoming request');
+      // logger.info({ headers: req.headers }, 'Incoming request');
       return { user: null };
     },
     // cache: 'bounded',
     persistedQueries: false,
   });
 
-  const { url } = await server.listen({ port: config.port });
+  const { url } = await server.listen({  port: config.port });
 
-  logger.info(`🚀 Server ready at  ${url}`);
+  // logger.info(`🚀 Server ready at  ${url}`);
 }
 
 startServer();
